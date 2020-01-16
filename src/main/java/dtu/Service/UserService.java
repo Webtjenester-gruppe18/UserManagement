@@ -75,4 +75,10 @@ public class UserService implements IUserService {
     public boolean deleteMerchant(Merchant merchant) {
         return this.database.deleteMerchant(merchant);
     }
+
+    @Override
+    public void addTransactionToUserByAccountId(String accountId, String transactionId) {
+        DTUPayUser user = this.database.getDTUPayUserByAccountId(accountId);
+        user.getTransactionIds().add(transactionId);
+    }
 }

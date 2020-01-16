@@ -20,4 +20,6 @@ public interface IUserService {
     boolean deleteCustomer(Customer customer);
 
     boolean deleteMerchant(Merchant merchant);
+
+    void addTransactionToUserByAccountId(String accountId, String transactionId);
 }

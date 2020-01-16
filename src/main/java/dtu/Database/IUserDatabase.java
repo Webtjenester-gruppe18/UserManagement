@@ -24,4 +24,6 @@ public interface IUserDatabase {
     boolean deleteCustomer(Customer customer);
 
     boolean deleteMerchant(Merchant merchant);
+
+    DTUPayUser getDTUPayUserByAccountId(String accountId);
 }

@@ -1,6 +1,7 @@
 package dtu.Controller;
 import dtu.Exception.UserAlreadyExistsException;
 import dtu.Exception.UserNotFoundException;
+import dtu.Model.AddTransactionToUserByAccountId;
 import dtu.Model.Customer;
 import dtu.Model.Merchant;
 import dtu.Service.UserService;
@@ -75,6 +76,14 @@ public class UserController {
         } else {
             return new ResponseEntity<>("The merchant is not deleted", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @RequestMapping (path = "/usermanager/transactionId/", method = RequestMethod.PUT)
+    public ResponseEntity<Object> addTransactionToUserByAccountId (@RequestBody AddTransactionToUserByAccountId addTransactionToUserByAccountId) {
+
+        userService.addTransactionToUserByAccountId(addTransactionToUserByAccountId.getAccountId(),addTransactionToUserByAccountId.getTransactionId());
+
+        return new ResponseEntity<>("The Transaction was added", HttpStatus.OK);
     }
 
 }
