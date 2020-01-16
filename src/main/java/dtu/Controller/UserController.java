@@ -54,17 +54,27 @@ public class UserController {
     @RequestMapping (path = "/usermanager/customer/{cprNumber}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteCustomer (@RequestBody Customer customer) {
 
-        userService.deleteCustomer(customer);
+        boolean success = userService.deleteCustomer(customer);
 
-        return new ResponseEntity<>("The customer is deleted", HttpStatus.OK);
+        if (success) {
+            return new ResponseEntity<>("The customer is deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("The customer is not deleted", HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
     @RequestMapping (path = "/usermanager/merchant/{cprNumber}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteMerchant (@RequestBody Merchant merchant) {
 
-        userService.deleteMerchant(merchant);
+        boolean success = userService.deleteMerchant(merchant);
 
-        return new ResponseEntity<>("The merchant is deleted", HttpStatus.OK);
+        if (success){
+            return new ResponseEntity<>("The merchant is deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("The merchant is not deleted", HttpStatus.NOT_FOUND);
+        }
     }
 
 }
