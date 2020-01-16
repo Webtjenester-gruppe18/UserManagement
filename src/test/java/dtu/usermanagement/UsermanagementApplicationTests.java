@@ -1,4 +1,4 @@
-package dtu.ws18.usermanagement;
+package dtu.usermanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
