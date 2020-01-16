@@ -1,6 +1,6 @@
 package dtu.Controller;
 
-import dtu.Database.*
+import dtu.Database.*;
 import dtu.Service.*;
 
 public class ControlReg {

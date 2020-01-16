@@ -75,8 +75,7 @@ public class InMemoryUserDatabase implements IUserDatabase {
         return true;
     }
 
-    @Override
-    public DTUPayUser getDTUPayUserByAccountId(String accountId) {
+    private DTUPayUser getDTUPayUserByAccountId(String accountId) {
 
         for (DTUPayUser customer : this.customers) {
             if (customer.getAccountId().equals(accountId)) {
@@ -93,7 +92,7 @@ public class InMemoryUserDatabase implements IUserDatabase {
         return null;
     }
 
-    @Override
+
     public void addTransactionToUserByAccountId(String accountId, String transactionId) {
         DTUPayUser user =  this.getDTUPayUserByAccountId(accountId);
         user.getTransactionIds().add(transactionId);
