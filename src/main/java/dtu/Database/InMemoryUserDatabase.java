@@ -19,7 +19,7 @@ public class InMemoryUserDatabase implements IUserDatabase {
                 return currentCustomer;
             }
         }
-        throw new UserNotFoundException("Could not find a user on that cprNumber" + cprNumber);
+        throw new UserNotFoundException("Could not find a user on that cprNumber " + cprNumber);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class InMemoryUserDatabase implements IUserDatabase {
                 return currentMerchant;
             }
         }
-        throw new UserNotFoundException("Could not find a user on that cprNumber");
+        throw new UserNotFoundException("Could not find a user on that cprNumber " + cprNumber);
     }
 
     @Override

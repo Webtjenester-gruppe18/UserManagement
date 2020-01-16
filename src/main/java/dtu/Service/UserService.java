@@ -36,6 +36,17 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Customer getCustomer(String cprNumber) throws UserNotFoundException {
+
+        return database.getCustomer(cprNumber);
+    }
+
+    @Override
+    public Merchant getMerchant(String cprNumber) throws UserNotFoundException {
+        return database.getMerchant(cprNumber);
+    }
+
+    @Override
     public String registerCustomer(Customer customer) throws UserAlreadyExistsException {
 
         if (customerExists(customer)){

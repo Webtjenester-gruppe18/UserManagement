@@ -1,8 +1,17 @@
 package dtu.Model;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class DTUPayUser {
+@Getter
+@Setter
+@NoArgsConstructor
+public abstract class DTUPayUser implements Serializable {
 
     private String accountId;
     private String firstName;
@@ -10,8 +19,7 @@ public abstract class DTUPayUser {
     private String cprNumber;
     ArrayList<String> transactionIds;
 
-    public DTUPayUser() {
-    }
+
 
     public DTUPayUser(String accountId, String firstName, String lastName, String cprNumber) {
         this.accountId = accountId;

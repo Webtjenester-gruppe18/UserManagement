@@ -9,6 +9,10 @@ public interface IUserService {
 
     boolean merchantExists(Merchant merchant);
 
+    Customer getCustomer(String cprNumber) throws UserNotFoundException;
+
+    Merchant getMerchant (String cprNumber) throws UserNotFoundException;
+
     String registerCustomer(Customer customer) throws UserAlreadyExistsException;
 
     String registerMerchant(Merchant merchant) throws UserAlreadyExistsException;
