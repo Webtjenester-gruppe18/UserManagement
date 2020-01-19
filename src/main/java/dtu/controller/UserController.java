@@ -78,7 +78,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping (path = "/usermanager/transactionId/", method = RequestMethod.PUT)
+    @RequestMapping (path = "/usermanager/transactionId", method = RequestMethod.PUT)
     public ResponseEntity<Object> addTransactionToUserByAccountId (@RequestBody AddTransactionToUserByAccountId addTransactionToUserByAccountId) {
 
         userService.addTransactionToUserByAccountId(addTransactionToUserByAccountId.getAccountId(),addTransactionToUserByAccountId.getTransactionId());
