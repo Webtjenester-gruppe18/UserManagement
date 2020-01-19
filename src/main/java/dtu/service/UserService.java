@@ -1,16 +1,17 @@
-package dtu.Service;
+package dtu.service;
 
-import dtu.Controller.ControlReg;
-import dtu.Model.*;
-import dtu.Exception.*;
-import dtu.Database.*;
+import dtu.controller.ControlReg;
+import dtu.database.*;
+import dtu.exception.*;
+import dtu.models.Customer;
+import dtu.models.DTUPayUser;
+import dtu.models.Merchant;
 
-import static org.glassfish.jersey.message.internal.HttpHeaderReader.Event.Control;
 
 public class UserService implements IUserService {
 
     IUserDatabase database = ControlReg.getUserDatabase();
-    
+
     @Override
     public boolean customerExists(Customer customer) {
 
@@ -19,7 +20,7 @@ public class UserService implements IUserService {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -27,7 +28,7 @@ public class UserService implements IUserService {
     @Override
     public boolean merchantExists(Merchant merchant) {
         for (Merchant currentMerchant : database.getAllMerchants()) {
-            if (currentMerchant.equals(merchant)){
+            if (currentMerchant.equals(merchant)) {
                 return true;
             }
         }
@@ -49,7 +50,7 @@ public class UserService implements IUserService {
     @Override
     public String registerCustomer(Customer customer) throws UserAlreadyExistsException {
 
-        if (customerExists(customer)){
+        if (customerExists(customer)) {
             throw new UserAlreadyExistsException("This user already exists in the database.");
         }
 

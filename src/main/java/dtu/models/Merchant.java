@@ -1,4 +1,4 @@
-package dtu.Model;
+package dtu.models;
 
 public class Merchant extends DTUPayUser {
 

@@ -1,7 +1,9 @@
-package dtu.Service;
+package dtu.service;
 
-import dtu.Exception.*;
-import dtu.Model.*;
+import dtu.exception.*;
+import dtu.models.Customer;
+import dtu.models.Merchant;
+
 
 public interface IUserService {
 

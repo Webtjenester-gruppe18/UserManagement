@@ -1,8 +1,8 @@
 
-package dtu.Database;
+package dtu.database;
 
-import dtu.Exception.*;
-import dtu.Model.*;
+import dtu.exception.*;
+import dtu.models.*;
 import java.util.ArrayList;
 
 public class InMemoryUserDatabase implements IUserDatabase {

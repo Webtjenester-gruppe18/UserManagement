@@ -1,4 +1,4 @@
-package dtu.Model;
+package dtu.models;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Getter;

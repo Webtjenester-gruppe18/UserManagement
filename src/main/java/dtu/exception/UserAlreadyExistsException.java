@@ -1,4 +1,4 @@
-package dtu.Exception;
+package dtu.exception;
 
 public class UserAlreadyExistsException extends Exception {
     public UserAlreadyExistsException(String message) {

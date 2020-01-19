@@ -1,10 +1,10 @@
-package dtu.Controller;
-import dtu.Exception.UserAlreadyExistsException;
-import dtu.Exception.UserNotFoundException;
-import dtu.Model.AddTransactionToUserByAccountId;
-import dtu.Model.Customer;
-import dtu.Model.Merchant;
-import dtu.Service.UserService;
+package dtu.controller;
+import dtu.exception.UserAlreadyExistsException;
+import dtu.exception.UserNotFoundException;
+import dtu.models.AddTransactionToUserByAccountId;
+import dtu.models.Customer;
+import dtu.models.Merchant;
+import dtu.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
