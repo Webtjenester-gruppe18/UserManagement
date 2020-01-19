@@ -1,94 +1,74 @@
 
 package dtu.database;
 
-import dtu.exception.*;
-import dtu.models.*;
-import java.util.ArrayList;
+import dtu.exception.UserNotFoundException;
+import dtu.models.Customer;
+import dtu.models.Merchant;
+import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+
+@Component
 public class InMemoryUserDatabase implements IUserDatabase {
 
-    private ArrayList<Customer> customers = new ArrayList<>();
-    private ArrayList<Merchant> merchants = new ArrayList<>();
+    private HashMap<String, Customer> customers = new HashMap<>();
+    private HashMap<String, Merchant> merchants = new HashMap<>();
 
 
     @Override
     public Customer getCustomer(String cprNumber) throws UserNotFoundException {
-
-        for (Customer currentCustomer : this.customers) {
-            if (currentCustomer.getCprNumber().equals(cprNumber)) {
-                return currentCustomer;
-            }
+        Customer customer = customers.get(cprNumber);
+        if (customer != null) {
+            return customer;
         }
-        throw new UserNotFoundException("Could not find a user on that cprNumber " + cprNumber);
+        throw new UserNotFoundException("Could not find a customer with that cprnumber" + cprNumber);
     }
 
     @Override
     public Merchant getMerchant(String cprNumber) throws UserNotFoundException {
-
-        for (Merchant currentMerchant : this.merchants) {
-            if (currentMerchant.getCprNumber().equals(cprNumber)){
-                return currentMerchant;
-            }
+        Merchant merchant = merchants.get(cprNumber);
+        if (merchant != null) {
+            return merchant;
         }
-        throw new UserNotFoundException("Could not find a user on that cprNumber " + cprNumber);
+        throw new UserNotFoundException("Could not find a merchant with that cprnumber" + cprNumber);
     }
 
     @Override
-    public ArrayList<Customer> getAllCustomers() {
+    public HashMap<String, Customer> getAllCustomers() {
         return this.customers;
     }
 
     @Override
-    public ArrayList<Merchant> getAllMerchants() {
+    public HashMap<String, Merchant> getAllMerchants() {
         return this.merchants;
     }
 
     @Override
     public String saveCustomer(Customer customer) {
-
-        this.customers.add(customer);
-
+        this.customers.put(customer.getCprNumber(), customer);
         return customer.getCprNumber();
     }
 
     @Override
     public String saveMerchant(Merchant merchant) {
-
-        this.merchants.add(merchant);
-
+        this.merchants.put(merchant.getCprNumber(), merchant);
         return merchant.getCprNumber();
     }
 
     @Override
-    public boolean deleteCustomer(Customer customer) {
+    public boolean deleteCustomer(String cprNumber) {
 
-        this.customers.remove(customer);
+        this.customers.remove(cprNumber);
 
         return true;
     }
 
     @Override
-    public boolean deleteMerchant(Merchant merchant) {
+    public boolean deleteMerchant(String cprNumber) {
 
-        this.merchants.remove(merchant);
+        this.merchants.remove(cprNumber);
 
         return true;
     }
 
-    public DTUPayUser getDTUPayUserByAccountId(String accountId) {
-
-        for (DTUPayUser customer : this.customers) {
-            if (customer.getAccountId().equals(accountId)) {
-                return customer;
-            }
-        }
-
-        for (DTUPayUser merchant : this.merchants) {
-            if (merchant.getAccountId().equals(accountId)) {
-                return merchant;
-            }
-        }
-
-        return null;
-    }
 }

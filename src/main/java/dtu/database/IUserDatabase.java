@@ -4,25 +4,23 @@ import dtu.exception.*;
 import dtu.models.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface IUserDatabase {
-
 
     Customer getCustomer(String cprNumber) throws UserNotFoundException;
 
     Merchant getMerchant(String cprNumber) throws UserNotFoundException;
 
-    ArrayList<Customer> getAllCustomers();
+    HashMap<String,Customer> getAllCustomers();
 
-    ArrayList<Merchant> getAllMerchants();
+    HashMap<String,Merchant> getAllMerchants();
 
     String saveCustomer(Customer customer);
 
     String saveMerchant(Merchant merchant);
 
-    boolean deleteCustomer(Customer customer);
+    boolean deleteCustomer(String cprNumber);
 
-    boolean deleteMerchant(Merchant merchant);
-
-    DTUPayUser getDTUPayUserByAccountId(String accountId);
+    boolean deleteMerchant(String cprNumber);
 }

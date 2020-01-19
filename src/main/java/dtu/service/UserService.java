@@ -1,39 +1,33 @@
 package dtu.service;
 
-import dtu.controller.ControlReg;
-import dtu.database.*;
-import dtu.exception.*;
+import dtu.database.IUserDatabase;
+import dtu.exception.UserAlreadyExistsException;
+import dtu.exception.UserNotFoundException;
 import dtu.models.Customer;
-import dtu.models.DTUPayUser;
 import dtu.models.Merchant;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class UserService implements IUserService {
 
-    IUserDatabase database = ControlReg.getUserDatabase();
+    private IUserDatabase database;
+
+    @Autowired
+    public UserService(IUserDatabase database) {
+
+        this.database = database;
+    }
 
     @Override
-    public boolean customerExists(Customer customer) {
-
-        for (Customer currentCustomer : database.getAllCustomers()) {
-            if (currentCustomer.equals(customer)) {
-                return true;
-            }
-        }
-
-        return false;
+    public boolean customerExists(String cprNumber) {
+        return database.getAllCustomers().containsKey(cprNumber);
     }
 
 
     @Override
-    public boolean merchantExists(Merchant merchant) {
-        for (Merchant currentMerchant : database.getAllMerchants()) {
-            if (currentMerchant.equals(merchant)) {
-                return true;
-            }
-        }
-
-        return false;
+    public boolean merchantExists(String cprNumber) {
+        return database.getAllMerchants().containsKey(cprNumber);
     }
 
     @Override
@@ -50,7 +44,7 @@ public class UserService implements IUserService {
     @Override
     public String registerCustomer(Customer customer) throws UserAlreadyExistsException {
 
-        if (customerExists(customer)) {
+        if (customerExists(customer.getCprNumber())) {
             throw new UserAlreadyExistsException("This user already exists in the database.");
         }
 
@@ -59,7 +53,7 @@ public class UserService implements IUserService {
 
     @Override
     public String registerMerchant(Merchant merchant) throws UserAlreadyExistsException {
-        if (merchantExists(merchant)) {
+        if (merchantExists(merchant.getCprNumber())) {
             throw new UserAlreadyExistsException("This user already exists in the database.");
         }
 
@@ -67,19 +61,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean deleteCustomer(Customer customer) {
+    public boolean deleteCustomer(String cprNumber) {
 
-        return this.database.deleteCustomer(customer);
+        return this.database.deleteCustomer(cprNumber);
     }
 
     @Override
-    public boolean deleteMerchant(Merchant merchant) {
-        return this.database.deleteMerchant(merchant);
+    public boolean deleteMerchant(String cprNumber) {
+        return this.database.deleteMerchant(cprNumber);
     }
 
-    @Override
-    public void addTransactionToUserByAccountId(String accountId, String transactionId) {
-        DTUPayUser user = this.database.getDTUPayUserByAccountId(accountId);
-        user.getTransactionIds().add(transactionId);
-    }
 }
