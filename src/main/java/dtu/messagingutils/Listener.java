@@ -57,7 +57,6 @@ public class Listener {
             try {
                 this.userService.registerCustomer(customer);
                 Event responseSuccess = new Event(EventType.CREATE_CUSTOMER_RESPONSE, "Created");
-                System.out.println(userService.getCustomer(customer.getCprNumber()).getFirstName());
                 this.rabbitTemplate.convertAndSend(RabbitMQValues.TOPIC_EXCHANGE_NAME, RabbitMQValues.DTU_SERVICE_ROUTING_KEY, responseSuccess);
             } catch (Exception e) {
                 Event responseFailure = new Event(EventType.CREATE_CUSTOMER_RESPONSE, "Failure");
