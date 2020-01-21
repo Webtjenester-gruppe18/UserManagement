@@ -7,6 +7,9 @@ import com.rabbitmq.client.DeliverCallback;
 import dtu.models.Event;
 import gherkin.deps.com.google.gson.Gson;
 
+/**
+ * @author Emil Glimø Vinkel - s175107
+ */
 
 public class EventReceiverImpl {
     private IEventReceiver eventReceiver;

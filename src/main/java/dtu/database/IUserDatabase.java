@@ -5,6 +5,9 @@ import dtu.models.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+/**
+ * @author Frederik Hjorth s175109
+ */
 
 public interface IUserDatabase {
 

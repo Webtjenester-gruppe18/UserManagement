@@ -1,5 +1,9 @@
 package dtu.service;
 
+/**
+ * @author Frederik Hjorth s175109
+ */
+
 import dtu.exception.UserAlreadyExistsException;
 import dtu.exception.UserNotFoundException;
 import dtu.models.Customer;

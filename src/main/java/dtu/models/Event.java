@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+/**
+ * @author Mathias Hansen s175112
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Emil Glimø Vinkel - s175107
+ */
+
 @Component
 public class EventSenderImpl implements IEventSender {
     private RabbitTemplate rabbitTemplate;

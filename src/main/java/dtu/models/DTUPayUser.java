@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * @author Frederik Hjorth s175109
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

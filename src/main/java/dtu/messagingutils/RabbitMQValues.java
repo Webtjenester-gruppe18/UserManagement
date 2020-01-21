@@ -1,5 +1,9 @@
 package dtu.messagingutils;
 
+/**
+ * @author Emil Glimø Vinkel - s175107
+ */
+
 public class RabbitMQValues {
     public static final String TOPIC_EXCHANGE_NAME = "dtupay-eventsExchange";
     public static final String DTU_SERVICE_QUEUE_NAME = "dtupayservice-queue";

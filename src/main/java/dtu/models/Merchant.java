@@ -1,5 +1,9 @@
 package dtu.models;
 
+/**
+ * @author Frederik Hjorth s175109
+ */
+
 public class Merchant extends DTUPayUser {
 
     public Merchant() {

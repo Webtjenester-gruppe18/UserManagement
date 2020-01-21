@@ -1,5 +1,9 @@
 package dtu.models;
 
+/**
+ * @author Mathias Hansen s175112
+ */
+
 public class Customer extends DTUPayUser {
 
     public Customer() {

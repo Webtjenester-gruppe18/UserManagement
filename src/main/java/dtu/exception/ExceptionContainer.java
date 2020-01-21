@@ -1,5 +1,9 @@
 package dtu.exception;
 
+/**
+ * @author Mathias Hansen s175112
+ */
+
 public class ExceptionContainer {
 
     private String errorMessage;

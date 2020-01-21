@@ -1,5 +1,9 @@
 package dtu.models;
 
+/**
+ * @author Mathias Hansen s175112
+ */
+
 public enum EventType {
 
     //Retrieve customer profile

@@ -1,5 +1,9 @@
 package dtu.service;
 
+/**
+ * @author Mathias Hansen s175112
+ */
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dtu.database.IUserDatabase;
 import dtu.exception.UserAlreadyExistsException;

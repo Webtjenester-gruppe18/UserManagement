@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
+/**
+ * @author Mathias Hansen s175112
+ */
+
 @Component
 public class InMemoryUserDatabase implements IUserDatabase {
 
