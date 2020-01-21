@@ -13,3 +13,5 @@ pipeline {
            }
      }
    }
+
+ // @author Emil s175107
