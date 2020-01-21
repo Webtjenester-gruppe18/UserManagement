@@ -34,7 +34,6 @@ public class UserService implements IUserService, IEventReceiver {
         return database.getAllCustomers().containsKey(cprNumber);
     }
 
-
     @Override
     public boolean merchantExists(String cprNumber) {
         return database.getAllMerchants().containsKey(cprNumber);

@@ -23,7 +23,7 @@ Feature: User management
   Scenario: Retrieve customer
     When the service receives the "RETRIEVE_CUSTOMER" event
     Then the customer is received
-    And the "RETRIEVE_CUSTOMER_RESPONSE" event is broadcast
+    And the "RETRIEVE_CUSTOMER_RESPONSE_SUCCESS" event is broadcast
 
   Scenario: Retrieve merchant
     When the service receives the "RETRIEVE_MERCHANT" event
