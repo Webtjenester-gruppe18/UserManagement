@@ -57,18 +57,12 @@ public class InMemoryUserDatabase implements IUserDatabase {
 
     @Override
     public boolean deleteCustomer(String cprNumber) {
-
-        this.customers.remove(cprNumber);
-
-        return true;
+        return this.customers.remove(cprNumber) != null;
     }
 
     @Override
     public boolean deleteMerchant(String cprNumber) {
-
-        this.merchants.remove(cprNumber);
-
-        return true;
+        return this.merchants.remove(cprNumber) != null;
     }
 
 }
