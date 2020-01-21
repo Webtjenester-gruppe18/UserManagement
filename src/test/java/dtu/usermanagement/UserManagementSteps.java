@@ -1,28 +1,19 @@
-package ws18.usermanagement;
-
+package dtu.usermanagement;
 
 import dtu.database.IUserDatabase;
 import dtu.database.InMemoryUserDatabase;
-import dtu.exception.UserAlreadyExistsException;
 import dtu.exception.UserNotFoundException;
 import dtu.messagingutils.IEventSender;
 import dtu.models.Customer;
 import dtu.models.Event;
 import dtu.models.EventType;
 import dtu.models.Merchant;
-
 import dtu.service.UserService;
-
-
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import org.mockito.ArgumentCaptor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.sql.SQLOutput;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

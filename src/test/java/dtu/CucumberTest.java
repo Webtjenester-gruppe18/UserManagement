@@ -1,4 +1,4 @@
-package ws18;
+package dtu;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
