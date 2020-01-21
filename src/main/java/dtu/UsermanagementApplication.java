@@ -2,9 +2,7 @@ package dtu;
 
 import dtu.database.IUserDatabase;
 import dtu.database.InMemoryUserDatabase;
-import dtu.messagingutils.EventReceiverImpl;
-import dtu.messagingutils.EventSenderImpl;
-import dtu.messagingutils.IEventSender;
+import dtu.messagingutils.*;
 import dtu.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,9 +22,9 @@ public class UsermanagementApplication {
 
     private void startUp() throws Exception {
         IUserDatabase userDatabase = new InMemoryUserDatabase();
-        IEventSender eventSender = new EventSenderImpl();
+        IEventSender eventSender = new RabbitMqSender();
         UserService userService = new UserService(userDatabase, eventSender);
-        new EventReceiverImpl(userService).listen();
+        new RabbitMqListener(userService).listen();
     }
 
 }

@@ -29,4 +29,4 @@ Feature: User management
   Scenario: Retrieve merchant
     When the service receives the "RETRIEVE_MERCHANT" event
     Then the merchant is received
-    And the "RETRIEVE_MERCHANT_RESPONSE" event is broadcast
+    And the "RETRIEVE_MERCHANT_RESPONSE_SUCCESS" event is broadcast

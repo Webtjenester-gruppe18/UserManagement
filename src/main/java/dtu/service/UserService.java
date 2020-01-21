@@ -15,17 +15,13 @@ import dtu.models.Customer;
 import dtu.models.Event;
 import dtu.models.EventType;
 import dtu.models.Merchant;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
 public class UserService implements IUserService, IEventReceiver {
 
     private IUserDatabase database;
     private IEventSender eventSender;
     private ObjectMapper objectMapper;
 
-    @Autowired
     public UserService(IUserDatabase database, IEventSender eventSender) {
         this.objectMapper = new ObjectMapper();
         this.database = database;
@@ -101,10 +97,10 @@ public class UserService implements IUserService, IEventReceiver {
                 cpr = objectMapper.convertValue(event.getObject(), String.class);
                 try {
                     Merchant merchant = this.getMerchant(cpr);
-                    Event responseSuccess = new Event(EventType.RETRIEVE_MERCHANT_RESPONSE, merchant, RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    Event responseSuccess = new Event(EventType.RETRIEVE_MERCHANT_RESPONSE_SUCCESS, merchant, RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
                     this.eventSender.sendEvent(responseSuccess);
                 } catch (UserNotFoundException e) {
-                    Event responseFailure = new Event(EventType.RETRIEVE_MERCHANT_RESPONSE, e.getMessage(), RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    Event responseFailure = new Event(EventType.RETRIEVE_MERCHANT_RESPONSE_FAILED, e.getMessage(), RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
                     this.eventSender.sendEvent(responseFailure);
                 }
                 break;
@@ -137,7 +133,7 @@ public class UserService implements IUserService, IEventReceiver {
                 deleteMerchantResponse.setType(EventType.DELETE_MERCHANT_RESPONSE);
                 deleteMerchantResponse.setRoutingKey(RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
 
-                if (this.deleteCustomer(cpr)) {
+                if (this.deleteMerchant(cpr)) {
                     deleteMerchantResponse.setObject(cpr + " is deleted");
                 } else {
                     deleteMerchantResponse.setObject("Failed to delete");
