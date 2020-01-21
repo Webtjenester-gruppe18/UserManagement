@@ -2,7 +2,6 @@ package dtu.models;
 
 public enum EventType {
 
-
     //Retrieve customer profile
     RETRIEVE_CUSTOMER,
     CREATE_CUSTOMER,

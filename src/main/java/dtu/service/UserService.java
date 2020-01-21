@@ -1,22 +1,32 @@
 package dtu.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dtu.database.IUserDatabase;
 import dtu.exception.UserAlreadyExistsException;
 import dtu.exception.UserNotFoundException;
+import dtu.messagingutils.IEventReceiver;
+import dtu.messagingutils.IEventSender;
+import dtu.messagingutils.RabbitMQValues;
 import dtu.models.Customer;
+import dtu.models.Event;
+import dtu.models.EventType;
 import dtu.models.Merchant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.text.normalizer.RangeValueIterator;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, IEventReceiver {
 
     private IUserDatabase database;
+    private IEventSender eventSender;
+    private ObjectMapper objectMapper;
 
     @Autowired
-    public UserService(IUserDatabase database) {
-
+    public UserService(IUserDatabase database, IEventSender eventSender) {
+        this.objectMapper = new ObjectMapper();
         this.database = database;
+        this.eventSender = eventSender;
     }
 
     @Override
@@ -32,7 +42,6 @@ public class UserService implements IUserService {
 
     @Override
     public Customer getCustomer(String cprNumber) throws UserNotFoundException {
-
         return database.getCustomer(cprNumber);
     }
 
@@ -71,4 +80,78 @@ public class UserService implements IUserService {
         return this.database.deleteMerchant(cprNumber);
     }
 
+    @Override
+    public void receiveEvent(Event event) throws Exception {
+        String cpr;
+        switch (event.getType()) {
+            case RETRIEVE_CUSTOMER:
+                cpr = objectMapper.convertValue(event.getObject(), String.class);
+                try {
+                    Customer customer = this.getCustomer(cpr);
+                    Event responseSuccess = new Event(EventType.RETRIEVE_CUSTOMER_RESPONSE, customer, RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseSuccess);
+                } catch (UserNotFoundException e) {
+                    Event responseFailure = new Event(EventType.RETRIEVE_CUSTOMER_RESPONSE, null, RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseFailure);
+                }
+                break;
+            case RETRIEVE_MERCHANT:
+                cpr = objectMapper.convertValue(event.getObject(), String.class);
+                try {
+                    Merchant merchant = this.getMerchant(cpr);
+                    Event responseSuccess = new Event(EventType.RETRIEVE_MERCHANT_RESPONSE, merchant, RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseSuccess);
+                } catch (UserNotFoundException e) {
+                    Event responseFailure = new Event(EventType.RETRIEVE_MERCHANT_RESPONSE, null, RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseFailure);
+                }
+                break;
+            case CREATE_CUSTOMER:
+                Customer customer = objectMapper.convertValue(event.getObject(), Customer.class);
+                try {
+                    this.registerCustomer(customer);
+                    Event responseSuccess = new Event(EventType.CREATE_CUSTOMER_RESPONSE, "Created", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseSuccess);
+                } catch (Exception e) {
+                    Event responseFailure = new Event(EventType.CREATE_CUSTOMER_RESPONSE, "Failure", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseFailure);
+                }
+                break;
+            case CREATE_MERCHANT:
+                Merchant merchant = objectMapper.convertValue(event.getObject(), Merchant.class);
+                try {
+                    this.registerMerchant(merchant);
+                    Event responseSuccess = new Event(EventType.CREATE_MERCHANT_RESPONSE, "Created", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseSuccess);
+                } catch (Exception e) {
+                    Event responseFailure = new Event(EventType.CREATE_MERCHANT_RESPONSE, "Failed to create", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseFailure);
+                }
+                break;
+            case DELETE_MERCHANT:
+                cpr = objectMapper.convertValue(event.getObject(), String.class);
+                try {
+                    if (this.deleteMerchant(cpr)) {
+                        Event responseSuccess = new Event(EventType.DELETE_MERCHANT_RESPONSE, "Deleted", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                        this.eventSender.sendEvent(responseSuccess);
+                    }
+                } catch (Exception e) {
+                    Event responseFailure = new Event(EventType.DELETE_MERCHANT_RESPONSE, "Failed to delete", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseFailure);
+                }
+                break;
+            case DELETE_CUSTOMER:
+                cpr = objectMapper.convertValue(event.getObject(), String.class);
+                try {
+                    if (this.deleteCustomer(cpr)) {
+                        Event responseSuccess = new Event(EventType.DELETE_CUSTOMER_RESPONSE, "Deleted", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                        this.eventSender.sendEvent(responseSuccess);
+                    }
+                } catch (Exception e) {
+                    Event responseFailure = new Event(EventType.DELETE_CUSTOMER_RESPONSE, "Failed to delete", RabbitMQValues.DTU_SERVICE_ROUTING_KEY);
+                    this.eventSender.sendEvent(responseFailure);
+                }
+                break;
+        }
+    }
 }
