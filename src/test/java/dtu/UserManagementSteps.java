@@ -1,4 +1,4 @@
-package dtu.usermanagement;
+package dtu;
 
 import dtu.database.IUserDatabase;
 import dtu.database.InMemoryUserDatabase;
@@ -14,11 +14,13 @@ import io.cucumber.java.en.When;
 import org.mockito.ArgumentCaptor;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @EnableAutoConfiguration
-@SpringBootTest
+@TestPropertySource
 public class UserManagementSteps {
 
     private Customer customer;
