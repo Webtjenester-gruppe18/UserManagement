@@ -7,6 +7,10 @@ import com.rabbitmq.client.DeliverCallback;
 import dtu.models.Event;
 import gherkin.deps.com.google.gson.Gson;
 
+/**
+ * 	Provided code from the instructor
+ */
+
 public class RabbitMqListener {
 
 	IEventReceiver service;
