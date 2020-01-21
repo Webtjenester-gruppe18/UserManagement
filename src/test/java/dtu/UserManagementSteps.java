@@ -19,6 +19,9 @@ import org.springframework.test.context.TestPropertySource;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Frederik Hjorth s175109
+ */
 @EnableAutoConfiguration
 @TestPropertySource
 public class UserManagementSteps {
